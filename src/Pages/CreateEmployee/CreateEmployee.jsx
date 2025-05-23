@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addEmployee } from "../../Store/EmployeeSlice.js"
-import { Link } from "react-router-dom"
 import { Modal } from "../../Components/Modal/Modal.jsx"
+import { InputField } from "../../Components/Atoms/InputField.jsx"
+import { AddressFieldset } from "../../Components/Molecules/AddressFieldset.jsx"
+import { SelectField } from "../../Components/Atoms/SelectField.jsx"
+import { stateOptions, departmentOptions } from "../../Components/Const/Const.jsx"
 import "./CreateEmployee.css"
 import "../../App.css"
 
@@ -10,7 +13,30 @@ export const CreateEmployee = () => {
     const dispatch = useDispatch()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    // États pour chaque champ du formulaire
+    // Custom styles for react-select 
+    const customStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            borderRadius: 8,
+            borderColor: state.isFocused ? "#6482AD" : "#7FA1C3",
+            boxShadow: state.isFocused ? "0 0 0 2px #F5EDED" : "none",
+            minHeight: "48px",
+            background: "#FFF",
+            fontSize: "1rem",
+            paddingLeft: "2px",
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected
+                ? "#7FA1C3"
+                : state.isFocused
+                    ? "#E2DAD6"
+                    : "#fff",
+            color: state.isSelected ? "#FFF" : "#222",
+            fontSize: "1rem",
+        }),
+    }
+    // State variables for form fields
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [dateOfBirth, setDateOfBirth] = useState("")
@@ -36,9 +62,9 @@ export const CreateEmployee = () => {
             department,
         }
 
-        dispatch(addEmployee(newEmployee)) // Enregistre dans Redux
+        dispatch(addEmployee(newEmployee)) //save in redux
 
-        // Réinitialisation du formulaire
+        // Reset form fields
         setFirstName("")
         setLastName("")
         setDateOfBirth("")
@@ -55,17 +81,11 @@ export const CreateEmployee = () => {
 
     return (
         <div className="column center">
-            <div>
-                <h1 className="bleu"> HRnet</h1>
-                <Link to="/employees">View Current Employees</Link>
-            </div>
-            <h2>Create Employee</h2>
-            <form onSubmit={handleSubmit} className="flex-column">
-                <label htmlFor="first-name">First Name</label>
-                <input type="text" id="first-name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
-                <label htmlFor="last-name">Last Name</label>
-                <input type="text" id="last-name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <h2 className="create-employee-title colorPrimary">Create Employee</h2>
+            <form onSubmit={handleSubmit} className="form-create column backWhite">
+                <InputField label="First Name" id="first-name" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                <InputField label="Last Name" id="last-name" value={lastName} onChange={e => setLastName(e.target.value)} />
 
                 <label htmlFor="date-of-birth">Date of Birth</label>
                 <input id="date-of-birth" type="text" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
@@ -76,41 +96,35 @@ export const CreateEmployee = () => {
                 <input id="start-date" type="text" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 {/* $('#start-date').datetimepicker(); */}
 
-                <fieldset className="address column">
-                    <legend>Address</legend>
-                    <label htmlFor="street">Street</label>
-                    <input id="street" type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
+                <AddressFieldset
+                    street={street}
+                    setStreet={setStreet}
+                    setCity={setCity}
+                    city={city}
+                    state={state}
+                    setState={setState}
+                    stateOptions={stateOptions}
+                    customStyles={customStyles}
+                />
+                <SelectField
+                    customStyles={customStyles}
+                    label={"Department"}
+                    inputId="department"
+                    options={departmentOptions}
+                    value={department}
+                    onChange={option => setDepartment(option ? option.value : "")}
+                    placeholder="Select a department"
+                />
 
-                    <label htmlFor="city">City</label>
-                    <input id="city" type="text" value={city} onChange={(e) => setCity(e.target.value)} />
-
-                    <label htmlFor="state">State</label>
-                    <select id="state" value={state} onChange={(e) => setState(e.target.value)}>
-                        <option value="">Select a state</option>
-                        <option value="NY">New York</option>
-                        <option value="CA">California</option>
-                    </select>
-                </fieldset>
-
-                <label htmlFor="zip-code">Zip Code</label>
-                <input id="zip-code" type="number" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
-
-                <label htmlFor="department">Department</label>
-                <select id="department" value={department} onChange={(e) => setDepartment(e.target.value)}>
-                    <option value="Sales">Sales</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Engineering">Engineering</option>
-                    <option value="Human Resources">Human Resources</option>
-                    <option value="Legal">Legal</option>
-                </select>
+                <InputField label="zip-code" id="zip-code" value={zipCode} onChange={e => setZipCode(e.target.value)} type="number" />
 
                 <div>
-                    <button type="submit" className="button">
+                    <button type="submit" className="button-save backSecondary colorWhite">
                         Save
                     </button>
                     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                        <h2>Succès !</h2>
-                        <p>L'employé a bien été créé.</p>
+                        <h2>Yeaah</h2>
+                        <p>New Employee created.</p>
                     </Modal>
                 </div>
             </form>
