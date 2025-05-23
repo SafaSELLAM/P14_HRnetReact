@@ -1,0 +1,22 @@
+.navbar {
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(100, 130, 173, 0.08);
+}
+
+.navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.navbar-links a {
+    color: #F5EDED;
+    text-decoration: none;
+    margin-left: 2rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+    color: #E2DAD6;
+}
