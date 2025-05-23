@@ -13,12 +13,6 @@
 }
 
 
-label {
-  display: block;
-  margin-top: 1rem;
-  margin-bottom: 10px;
-}
-
 .app {
   min-height: 100vh;
 }
@@ -28,8 +22,11 @@ label {
 }
 
 body {
+  background: #F5EDED;
+  color: #222;
   font-family: "Montserrat", sans-serif;
   margin: auto;
+  min-height: 100vh;
 }
 
 .center {
@@ -73,7 +70,19 @@ body {
 }
 
 .colorPrimary {
-  color: #ff6060;
+  color: #6482AD;
+}
+
+.colorSecondary {
+  color: #7FA1C3;
+}
+
+.colorTertiary {
+  color: #E2DAD6;
+}
+
+.colorQuaternary {
+  color: #F5EDED;
 }
 
 .colorWhite {
@@ -84,16 +93,24 @@ body {
   color: black;
 }
 
+.backWhite {
+  background-color: #ffffff;
+}
+
 .backPrimary {
-  background-color: #ff6060;
+  background-color: #6482AD
 }
 
 .backSecondary {
-  background-color: #f6f6f6;
+  background-color: #7FA1C3
 }
 
 .backTertiary {
-  background-color: black;
+  background-color: #E2DAD6
+}
+
+.backquaternary {
+  background-color: #F5EDED
 }
 
 .noDecoration {
