@@ -1,6 +1,6 @@
 import Select from "react-select"
 
-export const SelectField = ({ label, inputId, options, value, onChange, placeholder, customStyles }) => {
+export const SelectField = ({ label, inputId, options, value, onChange, placeholder, customStyles, required = 'true' }) => {
     return (
         <>
             <label htmlFor={inputId}>{label}</label>
@@ -11,6 +11,7 @@ export const SelectField = ({ label, inputId, options, value, onChange, placehol
                 onChange={option => onChange(option ? option.value : "")}
                 placeholder={placeholder}
                 styles={customStyles}
+                required={required}
             />
         </>
     )
