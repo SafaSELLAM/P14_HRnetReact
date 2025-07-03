@@ -8,6 +8,8 @@ import { SelectField } from "../../Components/Atoms/SelectField.jsx"
 import { stateOptions, departmentOptions } from "../../Components/Const/Const.jsx"
 import "./CreateEmployee.css"
 import "../../App.css"
+import { DatePicker } from "react-datepicker-custom-hirraeth_98"
+import 'react-datepicker-custom-hirraeth_98/dist/index.css'
 
 export const CreateEmployee = () => {
     const dispatch = useDispatch()
@@ -49,7 +51,6 @@ export const CreateEmployee = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
         const newEmployee = {
             firstName,
             lastName,
@@ -80,51 +81,62 @@ export const CreateEmployee = () => {
     }
 
     return (
-        <div className="column center">
+        <div className="column">
 
             <h2 className="create-employee-title colorPrimary">Create Employee</h2>
             <form onSubmit={handleSubmit} className="form-create column backWhite">
-                <InputField label="First Name" id="first-name" value={firstName} onChange={e => setFirstName(e.target.value)} />
-                <InputField label="Last Name" id="last-name" value={lastName} onChange={e => setLastName(e.target.value)} />
+                <div className="form-container row">
+                    <div className="form-input column ">
+                        <InputField label="First Name" id="first-name" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                        <InputField label="Last Name" id="last-name" value={lastName} onChange={e => setLastName(e.target.value)} />
 
-                <label htmlFor="date-of-birth">Date of Birth</label>
-                <input id="date-of-birth" type="text" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
-                {/* jQuery datetimepicker ici, commenté pour l’instant */}
-                {/* $('#date-of-birth').datetimepicker(); */}
+                        <label htmlFor="date-of-birth">Date of Birth</label>
+                        <DatePicker lang="en" id="date-of-birth" type="text" value={dateOfBirth} onChange={(e) => {
+                            setDateOfBirth(e.target.value)
+                        }}
+                        />
+                        <label htmlFor="start-date">Start Date</label>
+                        <DatePicker id="start-date" type="text" value={startDate} onChange={(e) => {
+                            setStartDate(e.target.value)
+                        }}
+                            lang="en" />
 
-                <label htmlFor="start-date">Start Date</label>
-                <input id="start-date" type="text" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                {/* $('#start-date').datetimepicker(); */}
+                    </div>
+                    <div className="form-input column ">
 
-                <AddressFieldset
-                    street={street}
-                    setStreet={setStreet}
-                    setCity={setCity}
-                    city={city}
-                    state={state}
-                    setState={setState}
-                    stateOptions={stateOptions}
-                    customStyles={customStyles}
-                />
-                <SelectField
-                    customStyles={customStyles}
-                    label={"Department"}
-                    inputId="department"
-                    options={departmentOptions}
-                    value={department}
-                    onChange={option => setDepartment(option ? option.value : "")}
-                    placeholder="Select a department"
-                />
+                        <AddressFieldset
+                            street={street}
+                            setStreet={setStreet}
+                            setCity={setCity}
+                            city={city}
+                            state={state}
+                            setState={setState}
+                            stateOptions={stateOptions}
+                            customStyles={customStyles}
+                        />
+                        <SelectField
+                            customStyles={customStyles}
+                            label={"Department"}
+                            inputId="department"
+                            options={departmentOptions}
+                            value={department}
+                            onChange={(value) => {
+                                setDepartment(value || "Sales")
+                            }}
+                            placeholder="Select a department"
+                        />
 
-                <InputField label="zip-code" id="zip-code" value={zipCode} onChange={e => setZipCode(e.target.value)} type="number" />
+                        <InputField label="Zip-code" id="zip-code" value={zipCode} onChange={e => setZipCode(e.target.value)} type="number" />
+                    </div>
 
-                <div>
-                    <button type="submit" className="button-save backSecondary colorWhite">
+                </div>
+
+                <div className="save-button_container row">
+                    <button type="submit" className="button-save  backSecondary colorWhite">
                         Save
                     </button>
                     <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                        <h2>Yeaah</h2>
-                        <p>New Employee created.</p>
+                        <h2 className="modal-text center colorPrimary">A New Employee created !</h2>
                     </Modal>
                 </div>
             </form>
