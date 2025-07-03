@@ -2,11 +2,22 @@
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(100, 130, 173, 0.10);
     padding: 2rem;
-    margin-top: 2rem;
-    min-width: 320px;
-    max-width: 400px;
-    width: 100%;
+    margin: auto;
+    width: 90%;
     gap: 1rem;
+}
+
+.form-container {
+    justify-content: space-between;
+    width: 90%;
+}
+
+.form-input {
+    width: 40%;
+}
+
+.save-button_container {
+    margin: 0 auto;
 }
 
 .button-save {
@@ -24,6 +35,11 @@
 }
 
 .create-employee-title {
+    margin: 1rem auto;
+    font-size: 35px;
+}
+
+label {
     margin-top: 1rem;
 }
 
@@ -34,10 +50,17 @@ input[type="number"] {
     border: 1.5px solid #7FA1C3;
     border-radius: 8px;
     font-size: 1rem;
-    margin-bottom: 1rem;
     transition: border-color 0.2s, box-shadow 0.2s;
     outline: none;
     box-sizing: border-box;
+}
+
+.date-picker-div-input {
+    width: 100%;
+}
+
+.date-picker-calender {
+    margin-top: 0;
 }
 
 input[type="text"]:focus,
