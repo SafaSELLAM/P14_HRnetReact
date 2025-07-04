@@ -8,20 +8,37 @@ import './employeelist.css'
 export const EmployeeList = () => {
     const employees = useSelector(state => state.employees.employees)
 
+    const dateSorting = (rowA, rowB, columnId) => {
+        const dateA = new Date(rowA.getValue(columnId))
+        const dateB = new Date(rowB.getValue(columnId))
+        return dateA.getTime() - dateB.getTime()
+    }
+
+    // Define table columns configuration usememo is used to memoize the columns definition
     const columns = useMemo(() => [
         { header: "First Name", accessorKey: "firstName" },
         { header: "Last Name", accessorKey: "lastName" },
-        { header: "Start Date", accessorKey: "startDate" },
+        {
+            header: "Start Date",
+            accessorKey: "startDate",
+            sortingFn: dateSorting
+        },
         { header: "Department", accessorKey: "department" },
-        { header: "Date of Birth", accessorKey: "dateOfBirth" },
+        {
+            header: "Date of Birth",
+            accessorKey: "dateOfBirth",
+            sortingFn: dateSorting
+        },
         { header: "Street", accessorKey: "street" },
         { header: "City", accessorKey: "city" },
         { header: "State", accessorKey: "state" },
         { header: "Zip Code", accessorKey: "zipCode" },
     ], [])
 
+    // Memoize the data list to avoid unnecessary re-renders
     const dataList = useMemo(() => employees, [employees])
 
+    // Initialize the table instance with the data and columns
     const table = useReactTable({
         data: dataList,
         columns,
