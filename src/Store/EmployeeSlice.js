@@ -17,16 +17,9 @@ const employeeSlice = createSlice({
         addEmployee: (state, action) => {
             state.employees.push(action.payload)
         },
-        resetWithMockData: (state, action) => {
-            const count = action.payload || 500
-            const mockData = generateMockEmployees(count)
-            state.employees = mockData
-        },
-        clearAllEmployees: (state) => {
-            state.employees = []
-        },
+ 
     }
 })
 
-export const { addEmployee, resetWithMockData, clearAllEmployees } = employeeSlice.actions
+export const { addEmployee } = employeeSlice.actions
 export default employeeSlice.reducer
